@@ -1,6 +1,6 @@
 # Derived from PKGBUILD for Inox
 # Original Inox PKGBUILD authors:
-# Maintainer: Michael Egger <gcarq@archlinux.info>
+# Maintainer: JustKidding <jk at vin dot ovh>
 # Contributor: Evangelos Foutras <evangelos@foutrelis.com>
 # Contributor: Pierre Schmitz <pierre@archlinux.de>
 # Contributor: Jan "heftig" Steffens <jan.steffens@gmail.com>
@@ -8,8 +8,8 @@
 
 pkgname=ungoogled-chromium
 # Commit or tag for the upstream ungoogled-chromium repo
-_ungoogled_version='74.0.3729.169-1'
-_ungoogled_archlinux_version=c0bd60f9726f68c62471f15a701f1087baec87c4
+_ungoogled_version='76.0.3809.87-1'
+_ungoogled_archlinux_version=master
 _chromium_version=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/chromium_version.txt)
 _ungoogled_revision=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/revision.txt)
 pkgver=${_chromium_version}
@@ -37,11 +37,13 @@ conflicts=('chromium')
 source=(https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${_chromium_version}.tar.xz
         chromium-launcher-$_launcher_ver.tar.gz::https://github.com/foutrelis/chromium-launcher/archive/v$_launcher_ver.tar.gz
         "ungoogled-chromium-${_ungoogled_version}.tar.gz::https://github.com/Eloston/ungoogled-chromium/archive/${_ungoogled_version}.tar.gz"
-        "ungoogled-chromium-archlinux-${_ungoogled_archlinux_version}.tar.gz::https://github.com/ungoogled-software/ungoogled-chromium-archlinux/archive/${_ungoogled_archlinux_version}.tar.gz")
+        "ungoogled-chromium-archlinux-${_ungoogled_archlinux_version}.tar.gz::https://github.com/jstkdng/ungoogled-chromium-archlinux/archive/${_ungoogled_archlinux_version}.tar.gz"
+        "chromium-drirc-disable-10bpc-color-configs.conf")
 sha256sums=($(curl -sL https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${_chromium_version}.tar.xz.hashes | grep sha256 | cut -d ' ' -f3)
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
-            'SKIP')
+            'SKIP'
+            'babda4f5c1179825797496898d77334ac067149cac03d797ab27ac69671a7feb')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -156,6 +158,9 @@ package() {
   install -D out/Default/chrome "$pkgdir/usr/lib/chromium/chromium"
   install -Dm4755 out/Default/chrome_sandbox "$pkgdir/usr/lib/chromium/chrome-sandbox"
   ln -s /usr/lib/chromium/chromedriver "$pkgdir/usr/bin/chromedriver"
+  
+  install -Dm644 ../chromium-drirc-disable-10bpc-color-configs.conf \
+    "$pkgdir/usr/share/drirc.d/10-$pkgname.conf"
 
   install -Dm644 chrome/installer/linux/common/desktop.template \
     "$pkgdir/usr/share/applications/chromium.desktop"
