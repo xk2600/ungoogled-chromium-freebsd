@@ -64,7 +64,7 @@ chromium's ui to a nice dark color.
 --force-dark-mode
 --enable-features=WebUIDarkMode
 ```
-To setup vaapi acceleration read this wiki page: 
+You still need to setup hardware acceleration in your arch installation, to do that, read this wiki page:
 [Hardware video acceleration](https://wiki.archlinux.org/index.php/Hardware_video_acceleration)
 
 ## License
