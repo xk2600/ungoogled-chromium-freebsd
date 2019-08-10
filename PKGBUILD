@@ -121,6 +121,7 @@ prepare() {
 build() {
   _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux-${_ungoogled_archlinux_version}"
   _ungoogled_repo="$srcdir/$pkgname-${_ungoogled_version}"
+  nproc=$(nproc --ignore=1)
 
   make -C chromium-launcher-$_launcher_ver
 
@@ -151,7 +152,7 @@ build() {
   msg2 'Configuring Chromium'
   gn gen out/Default --script-executable=/usr/bin/python2 --fail-on-unused-args
   msg2 'Building Chromium'
-  ninja -C out/Default chrome chrome_sandbox chromedriver
+  ninja -l $nproc -j $nproc -C out/Default chrome chrome_sandbox chromedriver
 }
 
 package() {
