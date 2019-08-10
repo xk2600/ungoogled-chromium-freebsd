@@ -13,5 +13,4 @@ debian_buster/system/event.patch
 debian_buster/system/jsoncpp.patch
 debian_buster/system/openjpeg.patch
 debian_buster/system/convertutf.patch
-ungoogled-chromium/linux/use-system-libraries-in-official-build.patch
 arch_linux/vaapi-fix.patch
