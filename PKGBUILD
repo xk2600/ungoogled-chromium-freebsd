@@ -13,7 +13,7 @@ _ungoogled_archlinux_version=master
 _chromium_version=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/chromium_version.txt)
 _ungoogled_revision=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/revision.txt)
 pkgver=${_chromium_version}
-_ungoogled_archlinux_pkgrel=0
+_ungoogled_archlinux_pkgrel=1
 pkgrel=$((_ungoogled_revision + _ungoogled_archlinux_pkgrel))
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
@@ -121,6 +121,7 @@ prepare() {
 build() {
   _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux-${_ungoogled_archlinux_version}"
   _ungoogled_repo="$srcdir/$pkgname-${_ungoogled_version}"
+  nproc=$(nproc --ignore=1)
 
   make -C chromium-launcher-$_launcher_ver
 
@@ -151,7 +152,7 @@ build() {
   msg2 'Configuring Chromium'
   gn gen out/Default --script-executable=/usr/bin/python2 --fail-on-unused-args
   msg2 'Building Chromium'
-  ninja -C out/Default chrome chrome_sandbox chromedriver
+  ninja -l $nproc -j $nproc -C out/Default chrome chrome_sandbox chromedriver
 }
 
 package() {
