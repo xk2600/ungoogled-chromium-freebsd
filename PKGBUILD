@@ -7,14 +7,8 @@
 # Contributor: Daniel J Griffiths <ghost1227@archlinux.us>
 
 pkgname=ungoogled-chromium
-# Commit or tag for the upstream ungoogled-chromium repo
-_ungoogled_version='76.0.3809.132-1'
-_ungoogled_archlinux_version=master
-_chromium_version=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/chromium_version.txt)
-_ungoogled_revision=$(curl -sL https://raw.githubusercontent.com/Eloston/ungoogled-chromium/${_ungoogled_version}/revision.txt)
-pkgver=${_chromium_version}
-_ungoogled_archlinux_pkgrel=0
-pkgrel=$((_ungoogled_revision + _ungoogled_archlinux_pkgrel))
+pkgver='77.0.3865.75'
+pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
 arch=('x86_64')
@@ -34,12 +28,12 @@ optdepends=('pepper-flash: support for Flash content'
             'libva-vdpau-driver: for hardware video acceleration with NVIDIA GPUs')
 provides=('chromium')
 conflicts=('chromium')
-source=(https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${_chromium_version}.tar.xz
+source=(https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${pkgver}.tar.xz
         chromium-launcher-$_launcher_ver.tar.gz::https://github.com/foutrelis/chromium-launcher/archive/v$_launcher_ver.tar.gz
-        "ungoogled-chromium-${_ungoogled_version}.tar.gz::https://github.com/Eloston/ungoogled-chromium/archive/${_ungoogled_version}.tar.gz"
-        "ungoogled-chromium-archlinux-${_ungoogled_archlinux_version}.tar.gz::https://github.com/jstkdng/ungoogled-chromium-archlinux/archive/${_ungoogled_archlinux_version}.tar.gz"
+        "ungoogled-chromium::git+https://github.com/Eloston/ungoogled-chromium"
+        "ungoogled-chromium-archlinux::git+https://github.com/jstkdng/ungoogled-chromium-archlinux"
         "chromium-drirc-disable-10bpc-color-configs.conf")
-sha256sums=($(curl -sL https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${_chromium_version}.tar.xz.hashes | grep sha256 | cut -d ' ' -f3)
+sha256sums=($(curl -sL https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${pkgver}.tar.xz.hashes | grep sha256 | cut -d ' ' -f3)
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'SKIP'
@@ -75,11 +69,11 @@ _unwanted_bundled_libs=(
 depends+=(${_system_libs[@]})
 
 prepare() {
-  _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux-${_ungoogled_archlinux_version}"
-  _ungoogled_repo="$srcdir/$pkgname-${_ungoogled_version}"
+  _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux"
+  _ungoogled_repo="$srcdir/$pkgname"
   _utils="${_ungoogled_repo}/utils"
 
-  cd "$srcdir/chromium-${_chromium_version}"
+  cd "$srcdir/chromium-${pkgver}"
 
   # Allow building against system libraries in official builds
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
@@ -119,13 +113,13 @@ prepare() {
 }
 
 build() {
-  _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux-${_ungoogled_archlinux_version}"
-  _ungoogled_repo="$srcdir/$pkgname-${_ungoogled_version}"
-  nproc=$(nproc --ignore=1)
+  _ungoogled_archlinux_repo="$srcdir/$pkgname-archlinux"
+  _ungoogled_repo="$srcdir/$pkgname"
+  nproc=$(nproc)
 
   make -C chromium-launcher-$_launcher_ver
 
-  cd "$srcdir/chromium-${_chromium_version}"
+  cd "$srcdir/chromium-${pkgver}"
 
   if check_buildoption ccache y; then
     # Avoid falling back to preprocessor mode when sources contain time macros
@@ -161,7 +155,7 @@ package() {
   install -Dm644 LICENSE \
     "$pkgdir/usr/share/licenses/chromium/LICENSE.launcher"
 
-  cd "$srcdir/chromium-${_chromium_version}"
+  cd "$srcdir/chromium-${pkgver}"
 
   install -D out/Default/chrome "$pkgdir/usr/lib/chromium/chromium"
   install -Dm4755 out/Default/chrome_sandbox "$pkgdir/usr/lib/chromium/chrome-sandbox"
