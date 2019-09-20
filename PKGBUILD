@@ -33,7 +33,7 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         "ungoogled-chromium::git+https://github.com/Eloston/ungoogled-chromium"
         "ungoogled-chromium-archlinux::git+https://github.com/jstkdng/ungoogled-chromium-archlinux"
         "chromium-drirc-disable-10bpc-color-configs.conf")
-sha256sums=($(curl -sL https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${pkgver}.tar.xz.hashes | grep sha256 | cut -d ' ' -f3)
+sha256sums=('004cfdb1df74847bea8659bcaf8e039d51fe1101d42b6cf1c6cc346073fdefc3'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'SKIP'
