@@ -8,7 +8,7 @@ debian_buster/system/event.patch
 debian_buster/system/openjpeg.patch
 debian_buster/system/convertutf.patch
 arch_linux/include-limits-in-web_time_range.cc.patch
-arch_linux/vaapi-fix.patch
+arch_linux/vaapi.patch
 arch_linux/include-memory-in-one_euro_filter.h.patch
 arch_linux/fix-wrong-string-initialization-in-LinkedHashSet.patch
 arch_linux/link-against-harfbuzz-subset.patch
