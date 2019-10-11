@@ -7,7 +7,7 @@
 # Contributor: Daniel J Griffiths <ghost1227@archlinux.us>
 
 pkgname=ungoogled-chromium
-pkgver='77.0.3865.90'
+pkgver='77.0.3865.120'
 pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
@@ -33,7 +33,7 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         "ungoogled-chromium::git+https://github.com/Eloston/ungoogled-chromium"
         "ungoogled-chromium-archlinux::git+https://github.com/jstkdng/ungoogled-chromium-archlinux"
         "chromium-drirc-disable-10bpc-color-configs.conf")
-sha256sums=('004cfdb1df74847bea8659bcaf8e039d51fe1101d42b6cf1c6cc346073fdefc3'
+sha256sums=('d792f9b09b1dcfd64e68f47a611c540dd1383dd9abd78ca1e06b2a7e2ff06af8'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'SKIP'
