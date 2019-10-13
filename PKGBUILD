@@ -8,7 +8,7 @@
 
 pkgname=ungoogled-chromium
 pkgver='77.0.3865.120'
-pkgrel=1
+pkgrel=2
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
 arch=('x86_64')
