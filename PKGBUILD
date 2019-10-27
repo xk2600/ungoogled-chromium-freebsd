@@ -42,12 +42,12 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         fix-spammy-unique-font-matching-log.patch
         chromium-widevine.patch
         chromium-skia-harmony.patch)
-sha256sums=('d792f9b09b1dcfd64e68f47a611c540dd1383dd9abd78ca1e06b2a7e2ff06af8'
+sha256sums=('ddc5794097d65ba19c1ae359c2057b08921e7b38b7afe9d5ec45f5e8b9a87462'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'bb5c5d5f4f93afd3653ad591c576658f4ccb72d4d8279095db50ef90b8cce085'
             'babda4f5c1179825797496898d77334ac067149cac03d797ab27ac69671a7feb'
-            '7496762a1953b15a48d3e5503fb76d9835940afd850a45b7de976de9f51479f9'
+            '9256123898cbdd4da4a111e5aa8752d5c6c2c07e59ca8677751791dd3321f6a9'
             '49052e8aa630c4aa57bf46823edc32b7b309493275163c3bb3f9fd390c73356e'
             '69694ab12a5ced389916c0c5e8c7bdc191544f576b134ddfb2fe9d4ed9ec4494'
             '4f81612c28957987f7344d8ce2b95a4a63136a8319c9751819436b11c62df057'
@@ -96,7 +96,9 @@ prepare() {
     third_party/blink/renderer/core/xml/*.cc \
     third_party/blink/renderer/core/xml/parser/xml_document_parser.cc \
     third_party/libxml/chromium/libxml_utils.cc
-  
+
+  msg2 'Applying archlinux patches'
+
   # Fix VA-API on Intel and Nvidia
   patch -Np1 -i ../vaapi-fix.patch
   
@@ -117,7 +119,7 @@ prepare() {
   patch -Np1 -i ../fix-spammy-unique-font-matching-log.patch
 
   # Load Widevine CDM if available
-  patch -Np1 -i ../chromium-widevine.patch
+  #patch -Np1 -i ../chromium-widevine.patch
 
   # https://crbug.com/skia/6663#c10
   patch -Np0 -i ../chromium-skia-harmony.patch
@@ -125,11 +127,12 @@ prepare() {
   # Ungoogled chromium stuff
   _ungoogled_repo="$srcdir/$pkgname"
   _utils="${_ungoogled_repo}/utils"
-  msg2 'Pruning binaries'
+  msg2 'Applying ungoogled chromium patches'
+  # Prune binaries
   python "$_utils/prune_binaries.py" ./ "$_ungoogled_repo/pruning.list"
-  msg2 'Applying patches'
+  # Patches themselves
   python "$_utils/patches.py" apply ./ "$_ungoogled_repo/patches"
-  msg2 'Applying domain substitution'
+  # domain substitution
   python "$_utils/domain_substitution.py" apply -r "$_ungoogled_repo/domain_regex.list" -f "$_ungoogled_repo/domain_substitution.list" -c domainsubcache.tar.gz ./
 
   # Force script incompatible with Python 3 to use /usr/bin/python2
