@@ -8,7 +8,7 @@
 
 pkgname=ungoogled-chromium
 pkgver=78.0.3904.70
-pkgrel=2
+pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
 arch=('x86_64')
@@ -196,7 +196,7 @@ build() {
   CXXFLAGS+=' -Wno-unknown-warning-option'
 
   gn gen out/Release --script-executable=/usr/bin/python2
-  ninja -l $nproc -j $nproc -C out/Release chrome chrome_sandbox chromedriver
+  ninja -C out/Release chrome chrome_sandbox chromedriver
 }
 
 package() {
