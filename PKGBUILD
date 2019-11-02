@@ -42,7 +42,7 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         fix-spammy-unique-font-matching-log.patch
         chromium-widevine.patch
         chromium-skia-harmony.patch)
-sha256sums=('ddc5794097d65ba19c1ae359c2057b08921e7b38b7afe9d5ec45f5e8b9a87462'
+sha256sums=('8df6ffca4087fc43e7d0443acc4f758399b248e96482705bd4fe7e88d239eb56'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'bb5c5d5f4f93afd3653ad591c576658f4ccb72d4d8279095db50ef90b8cce085'
