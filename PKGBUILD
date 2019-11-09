@@ -1,13 +1,12 @@
 # Maintainer: JustKidding <jk@vin.ovh>
-# Derived from PKGBUILD for Inox
-# Original Inox PKGBUILD authors:
+# Derived from PKGBUILD for Chromium
 # Contributor: Evangelos Foutras <evangelos@foutrelis.com>
 # Contributor: Pierre Schmitz <pierre@archlinux.de>
 # Contributor: Jan "heftig" Steffens <jan.steffens@gmail.com>
 # Contributor: Daniel J Griffiths <ghost1227@archlinux.us>
 
 pkgname=ungoogled-chromium
-pkgver=78.0.3904.87
+pkgver=78.0.3904.97
 pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
@@ -20,6 +19,7 @@ depends=('gtk3' 'nss' 'alsa-lib' 'xdg-utils' 'libxss' 'libcups' 'libgcrypt'
 makedepends=('python' 'python2' 'gperf' 'yasm' 'mesa' 'ninja' 'nodejs' 'git'
              'pipewire' 'clang' 'lld' 'gn' 'java-runtime-headless')
 optdepends=('pepper-flash: support for Flash content'
+            'pipewire: WebRTC desktop sharing under Wayland'
             'kdialog: needed for file dialogs in KDE'
             'gnome-keyring: for storing passwords in GNOME keyring'
             'kwallet: for storing passwords in KWallet'
@@ -42,7 +42,7 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         fix-spammy-unique-font-matching-log.patch
         chromium-widevine.patch
         chromium-skia-harmony.patch)
-sha256sums=('8df6ffca4087fc43e7d0443acc4f758399b248e96482705bd4fe7e88d239eb56'
+sha256sums=('d1f49ab9f4f973536166f587114553c21a29977bdc350dd407a89d34e22a9d07'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'bb5c5d5f4f93afd3653ad591c576658f4ccb72d4d8279095db50ef90b8cce085'
@@ -127,12 +127,12 @@ prepare() {
   # Ungoogled chromium stuff
   _ungoogled_repo="$srcdir/$pkgname"
   _utils="${_ungoogled_repo}/utils"
-  msg2 'Applying ungoogled chromium patches'
-  # Prune binaries
+  msg2 'Applying ungoogled chromium changes'
+  msg2 'Pruning binaries'
   python "$_utils/prune_binaries.py" ./ "$_ungoogled_repo/pruning.list"
-  # Patches themselves
+  msg2 'Applying patches'
   python "$_utils/patches.py" apply ./ "$_ungoogled_repo/patches"
-  # domain substitution
+  msg2 'Applying domain substitution'
   python "$_utils/domain_substitution.py" apply -r "$_ungoogled_repo/domain_regex.list" -f "$_ungoogled_repo/domain_substitution.list" -c domainsubcache.tar.gz ./
 
   # Force script incompatible with Python 3 to use /usr/bin/python2
