@@ -7,7 +7,7 @@
 # Contributor: Daniel J Griffiths <ghost1227@archlinux.us>
 
 pkgname=ungoogled-chromium
-pkgver=78.0.3904.87
+pkgver=78.0.3904.108
 pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
@@ -37,12 +37,13 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         add-missing-include-for-unique_ptr.patch
         dns_util-make-DohUpgradeEntry-non-const.patch
         fix-shutdown-crash-in-ProfileManager.patch
+        icu65.patch
         chromium-system-icu.patch
         chromium-system-zlib.patch
         fix-spammy-unique-font-matching-log.patch
         chromium-widevine.patch
         chromium-skia-harmony.patch)
-sha256sums=('8df6ffca4087fc43e7d0443acc4f758399b248e96482705bd4fe7e88d239eb56'
+sha256sums=('f9c53839f306d2973de27723360024f7904101d426b9e7e9cdb56e8bcc775b0e'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             'bb5c5d5f4f93afd3653ad591c576658f4ccb72d4d8279095db50ef90b8cce085'
@@ -51,6 +52,7 @@ sha256sums=('8df6ffca4087fc43e7d0443acc4f758399b248e96482705bd4fe7e88d239eb56'
             '49052e8aa630c4aa57bf46823edc32b7b309493275163c3bb3f9fd390c73356e'
             '69694ab12a5ced389916c0c5e8c7bdc191544f576b134ddfb2fe9d4ed9ec4494'
             '4f81612c28957987f7344d8ce2b95a4a63136a8319c9751819436b11c62df057'
+            '1de9bdbfed482295dda45c7d4e323cee55a34e42f66b892da1c1a778682b7a41'
             'e73cc2ee8d3ea35aab18c478d76fdfc68ca4463e1e10306fa1e738c03b3f26b5'
             'eb67eda4945a89c3b90473fa8dc20637511ca4dcb58879a8ed6bf403700ca9c8'
             '6fbffe59b886195b92c9a55137cef83021c16593f49714acb20023633e3ebb19'
@@ -110,6 +112,9 @@ prepare() {
 
   # https://crbug.com/1005244
   patch -Np1 -i ../fix-shutdown-crash-in-ProfileManager.patch
+
+  # https://crbug.com/1014272
+  patch -Np1 -i ../icu65.patch
 
   # Fixes from Gentoo
   patch -Np1 -i ../chromium-system-icu.patch
