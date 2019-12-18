@@ -7,7 +7,7 @@
 # Contributor: Daniel J Griffiths <ghost1227@archlinux.us>
 
 pkgname=ungoogled-chromium
-pkgver=79.0.3945.79
+pkgver=79.0.3945.88
 pkgrel=1
 _launcher_ver=6
 pkgdesc="A lightweight approach to removing Google web service dependency"
@@ -43,7 +43,7 @@ source=(https://commondatastorage.googleapis.com/chromium-browser-official/chrom
         fix-spammy-unique-font-matching-log.patch
         chromium-widevine.patch
         chromium-skia-harmony.patch)
-sha256sums=('e1a7362d396b0f72e6ad8c1d53cae67db201e0eeaa2a96dbe9214d080925bcf3'
+sha256sums=('4f18171d2225502018fcafae860ce9329199bcd6a0e50f8d83de041afd723fc9'
             '04917e3cd4307d8e31bfb0027a5dce6d086edb10ff8a716024fbb8bb0c7dccf1'
             'SKIP'
             '9ccb147e2989e900c7f2e60e818907f7fcea9cb12dc97138093654adaf137c4b'
